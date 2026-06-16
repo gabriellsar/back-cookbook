@@ -18,7 +18,6 @@ class StepSerializer(serializers.ModelSerializer):
         fields = ['id', 'order', 'instruction', 'is_locked']
 
 class RecipeSerializer(serializers.ModelSerializer):
-    # Aninhando os ingredientes e passos para leitura
     ingredients = IngredientSerializer(many=True, read_only=True)
     steps = StepSerializer(many=True, read_only=True)
     author_name = serializers.ReadOnlyField(source='author.username')
