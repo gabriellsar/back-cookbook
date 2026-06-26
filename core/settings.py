@@ -4,10 +4,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-&a93imz_f)mwg*mx6cwwpx8f!!jc-l4k(^b$o-qtc0vbxbj+8l'
 
@@ -70,6 +66,7 @@ AUTH_USER_MODEL = 'infra.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -139,8 +136,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",       
+    "[http://127.0.0.1:3000](http://127.0.0.1:3000)",
+    "http://localhost:5173",      
+    "[http://127.0.0.1:5173](http://127.0.0.1:5173)",
+    "http://localhost:5500",      
+    "[http://127.0.0.1:5500](http://127.0.0.1:5500)",
+    "http://localhost:8080",      
+]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
+# CORS_ALLOW_ALL_ORIGINS = True
 
-STATIC_URL = 'static/'
+CORS_ALLOW_CREDENTIALS = True
