@@ -17,6 +17,7 @@ class _LockableRecipeComponent(models.Model):
 
     class Meta:
         abstract = True
+        app_label = 'infra'
 
     @property
     def lock_status_text(self):

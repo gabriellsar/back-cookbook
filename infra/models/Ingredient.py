@@ -1,5 +1,5 @@
 from django.db import models
-from infra.models import _LockableRecipeComponent
+from ._LockableRecipeComponent import _LockableRecipeComponent
 
 class Ingredient(_LockableRecipeComponent):
     """
