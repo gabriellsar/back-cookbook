@@ -9,6 +9,3 @@ db.sqlite3
 *.log
 DS_Store
 .env
-
-infra/migrations/*
-!infra/migrations/__init__.py
