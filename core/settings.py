@@ -1,16 +1,22 @@
+import os
 from datetime import timedelta
 from pathlib import Path
-import dj_database_url
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+import dj_database_url # Importe isto no topo
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&a93imz_f)mwg*mx6cwwpx8f!!jc-l4k(^b$o-qtc0vbxbj+8l'
+# Segurança: Apanha a chave do ambiente ou usa um fallback para desenvolvimento local
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-sua-chave-padrao-aqui')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Desativa o DEBUG em produção
+DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['*']
+# Permite que o servidor do Render hospede a aplicação
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -99,10 +105,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 
