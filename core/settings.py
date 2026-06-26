@@ -4,14 +4,10 @@ from pathlib import Path
 import dj_database_url # Importe isto no topo
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-# Segurança: Apanha a chave do ambiente ou usa um fallback para desenvolvimento local
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-sua-chave-padrao-aqui')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Desativa o DEBUG em produção
-DEBUG = 'RENDER' not in os.environ
-
-# Permite que o servidor do Render hospede a aplicação
 ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
