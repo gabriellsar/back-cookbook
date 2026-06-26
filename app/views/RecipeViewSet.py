@@ -93,3 +93,40 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(new_recipe)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        summary="Avaliar uma receita",
+        description="Registra ou atualiza a nota (1 a 5) do usuário autenticado para a receita. Retorna a receita atualizada com a média recalculada.",
+        responses={
+            200: OpenApiResponse(description="Avaliação registrada."),
+            400: OpenApiResponse(description="Nota inválida (deve ser um inteiro de 1 a 5)."),
+            401: OpenApiResponse(description="O usuário precisa estar autenticado para avaliar.")
+        },
+        tags=['Receitas - Ações Customizadas']
+    )
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def rate(self, request, pk=None):
+        recipe = self.get_object()
+
+        try:
+            value = int(request.data.get('value'))
+        except (TypeError, ValueError):
+            return Response(
+                {'detail': 'O campo "value" deve ser um inteiro de 1 a 5.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if value < 1 or value > 5:
+            return Response(
+                {'detail': 'A nota deve estar entre 1 e 5.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        Rating.objects.update_or_create(
+            recipe=recipe,
+            user=request.user,
+            defaults={'value': value}
+        )
+
+        serializer = self.get_serializer(recipe)
+        return Response(serializer.data, status=status.HTTP_200_OK)

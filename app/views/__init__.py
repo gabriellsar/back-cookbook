@@ -1,7 +1,7 @@
 from .IngredientViewSet import IngredientViewSet
 from .RecipeViewSet import RecipeViewSet
 from .StepViewSet import StepViewSet
-from .AuthViewSet import RegisterView
+from .AuthViewSet import RegisterView, CustomTokenObtainPairView
 
 
 __all__ = [
@@ -9,4 +9,5 @@ __all__ = [
     'RecipeViewSet',
     'StepViewSet',
     'RegisterView',
+    'CustomTokenObtainPairView',
 ]
