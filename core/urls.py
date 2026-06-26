@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from rest_framework.permissions import AllowAny
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
 from app.views import RegisterView
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/api/docs/swagger-ui/', permanent=True), name='index'),
+
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')), 
 
