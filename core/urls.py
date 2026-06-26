@@ -8,7 +8,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 from app.views import RegisterView
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/api/docs/swagger-ui/', permanent=True), name='index'),
+    path('', RedirectView.as_view(url='/api/docs/swagger/', permanent=True), name='index'),
 
     path('admin/', admin.site.urls),
     path('api/', include('app.urls')), 
