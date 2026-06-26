@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 from pathlib import Path
-import dj_database_url # Importe isto no topo
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
