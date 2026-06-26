@@ -26,18 +26,23 @@ class IngredientSerializer(serializers.ModelSerializer):
     """
     Serializador para a entidade Ingredient.
     """
+    
+    recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all(), write_only=True)
+
     class Meta:
         model = Ingredient
-        fields = ['id', 'name', 'quantity', 'is_locked']
+        fields = ['id', 'recipe', 'name', 'quantity', 'is_locked']
 
 
 class StepSerializer(serializers.ModelSerializer):
     """
     Serializador para a entidade Step.
     """
+    recipe = serializers.PrimaryKeyRelatedField(queryset=Recipe.objects.all(), write_only=True)
+
     class Meta:
         model = Step
-        fields = ['id', 'step_number', 'instruction', 'is_locked']
+        fields = ['id', 'recipe', 'step_number', 'instruction', 'is_locked']
 
 
 class RecipeSerializer(serializers.ModelSerializer):

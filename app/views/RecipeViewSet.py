@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from drf_spectacular.utils import OpenApiResponse, extend_schema, extend_schema_view, extend_schema_view
     
 from app.serializers import RecipeSerializer, IngredientSerializer, StepSerializer
-from infra.models import Recipe, Ingredient, Step
+from infra.models import *
 
 @extend_schema_view(
     list=extend_schema(
@@ -78,19 +78,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
 
         for item in original_recipe.ingredients.all():
-            Ingredient.objects.create(
-                recipe=new_recipe,
+            new_recipe.ingredients.create(
                 name=item.name,
                 quantity=item.quantity,
-                is_locked=item.is_locked # Herda o status de bloqueio do Guardião
+                is_locked=item.is_locked
             )
 
         for step in original_recipe.steps.all():
-            Step.objects.create(
-                recipe=new_recipe,
-                order=step.order,
+            new_recipe.steps.create(
+                step_number=step.step_number,
                 instruction=step.instruction,
-                is_locked=step.is_locked # Herda o status de bloqueio
+                is_locked=step.is_locked
             )
+
         serializer = self.get_serializer(new_recipe)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_200_OK)

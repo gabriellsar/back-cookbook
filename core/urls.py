@@ -17,6 +17,6 @@ urlpatterns = [
     
     # Swagger and Redoc documentation endpoints
     path('api/schema/',SpectacularAPIView.as_view(authentication_classes=[],permission_classes=[AllowAny],),name='schema'),
-    path('swagger/',SpectacularSwaggerView.as_view(url_name='schema',authentication_classes=[],permission_classes=[AllowAny],),name='schema-swagger-ui'),
-    path('redoc/',SpectacularRedocView.as_view(url_name='schema',authentication_classes=[], permission_classes=[AllowAny],),name='schema-redoc'),
+    path('api/docs/swagger/',SpectacularSwaggerView.as_view(url_name='schema',authentication_classes=[],permission_classes=[AllowAny],),name='schema-swagger-ui'),
+    path('api/docs/redoc/',SpectacularRedocView.as_view(url_name='schema',authentication_classes=[], permission_classes=[AllowAny],),name='schema-redoc'),
 ]
